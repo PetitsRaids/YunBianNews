@@ -6,5 +6,6 @@
     科普文章来源: 果壳网
 
 软件截图:
+    ![新闻](https://github.com/PetitsRaids/YunBianNews/tree/master/app/screenshot/news.png)
 
 正在添加更多的数据和功能...
