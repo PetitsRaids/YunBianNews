@@ -5,7 +5,12 @@
     新闻数据来源: 新华网RSS
     科普文章来源: 果壳网
 
-软件截图:
-    ![新闻](https://github.com/PetitsRaids/YunBianNews/tree/master/app/screenshot/news.png)
+软件截图:<br>
+<img src="https://raw.githubusercontent.com/PetitsRaids/YunBianNews/master/app/screenshot/news.png" width=200/>
+<img src="https://raw.githubusercontent.com/PetitsRaids/YunBianNews/master/app/screenshot/news_detail.png" width=200/>
+<img src="https://raw.githubusercontent.com/PetitsRaids/YunBianNews/master/app/screenshot/refreshing.png" width=200/>
+<br>
+<img src="https://raw.githubusercontent.com/PetitsRaids/YunBianNews/master/app/screenshot/guokr.png" width=200/>
+<img src="https://raw.githubusercontent.com/PetitsRaids/YunBianNews/master/app/screenshot/guokr_detail.png" width=200/>
 
 正在添加更多的数据和功能...
