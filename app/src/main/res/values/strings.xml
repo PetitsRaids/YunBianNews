@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">YunBianNews</string>
+
+    <string name="des_news_img">News Title Image</string>
+    <string name="des_guokr_img">Guokr Title Image</string>
+
+    <string name="data_updated">Data Has Updated</string>
+
+    <string name="without_description">Without Description Right Now</string>
+    <string name="news_tag">News</string>
+    <string name="guokr_tag">Guokr</string>
+    <string name="des_guokr_article_img">Guokr Article Image</string>
 </resources>
