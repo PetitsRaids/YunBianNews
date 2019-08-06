@@ -17,6 +17,8 @@ public class News {
 
     private String time;
 
+    private int type;
+
     public int getId() {
         return id;
     }
@@ -57,4 +59,11 @@ public class News {
         this.title = title;
     }
 
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 }

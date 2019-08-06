@@ -13,6 +13,7 @@ public class GuokrItem{
     private String small_image;
     private String summary;
     private String resource_url;
+    private int type;
 
     public int getSelfId() {
         return selfId;
@@ -62,4 +63,11 @@ public class GuokrItem{
         this.summary = summary;
     }
 
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 }

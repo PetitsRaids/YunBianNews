@@ -15,8 +15,9 @@ import javax.xml.parsers.SAXParserFactory;
 
 public class DecodeUtil {
 
-    public static List<News> parseNewsWithSAX(String xmlData) {
+    public static List<News> parseNewsWithSAX(String xmlData, int type) {
         SaxNewsHandler handler = new SaxNewsHandler();
+        handler.setType(type);
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             XMLReader xmlReader = factory.newSAXParser().getXMLReader();

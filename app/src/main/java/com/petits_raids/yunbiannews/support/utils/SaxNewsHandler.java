@@ -1,5 +1,6 @@
 package com.petits_raids.yunbiannews.support.utils;
 
+import com.petits_raids.yunbiannews.api.NewsApi;
 import com.petits_raids.yunbiannews.data.model.News;
 
 import org.xml.sax.Attributes;
@@ -16,6 +17,7 @@ public class SaxNewsHandler extends DefaultHandler {
     private StringBuilder helpBuilder = new StringBuilder();
     private boolean isStart;
     private boolean isFirst = true;
+    private int type;
     private int id = 0;
 
     @Override
@@ -58,7 +60,28 @@ public class SaxNewsHandler extends DefaultHandler {
         helpBuilder.setLength(0);
         if (qName.equals("description")) {
             news.setId(id++);
+            news.setType(type);
             newsList.add(news);
+        }
+    }
+
+    public void setType(int type) {
+        this.type = type;
+        switch (type) {
+            case NewsApi.LOCAL_NEWS:
+                id = 0;
+                break;
+            case NewsApi.WORLD_NEWS:
+                id = 300;
+                break;
+            case NewsApi.POLITICS_NEWS:
+                id = 600;
+                break;
+            case NewsApi.PICTURE_NEWS:
+                id = 900;
+                break;
+            default:
+                break;
         }
     }
 

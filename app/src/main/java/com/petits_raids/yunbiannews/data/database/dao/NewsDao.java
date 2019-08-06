@@ -19,6 +19,6 @@ public interface NewsDao {
     @Query("DELETE FROM news")
     void deleteAll();
 
-    @Query("SELECT * FROM news")
-    LiveData<List<News>> getAllNews();
+    @Query("SELECT * FROM news WHERE type = :type")
+    LiveData<List<News>> getAllNews(int type);
 }

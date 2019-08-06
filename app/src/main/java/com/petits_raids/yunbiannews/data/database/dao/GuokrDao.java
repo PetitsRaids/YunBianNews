@@ -19,6 +19,6 @@ public interface GuokrDao {
     @Query("DELETE FROM guokr_item")
     void deleteAll();
 
-    @Query("SELECT * FROM guokr_item")
-    LiveData<List<GuokrItem>> getAllItems();
+    @Query("SELECT * FROM guokr_item WHERE type = :type")
+    LiveData<List<GuokrItem>> getAllItems(int type);
 }

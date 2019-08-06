@@ -15,8 +15,8 @@ public class NetworkUtil {
         return client.newCall(request);
     }
 
-    public static Call askForGuoKr() {
-        Request request = new Request.Builder().url(GuokrApi.GUOKR_HOT).build();
+    public static Call askForGuoKr(int type) {
+        Request request = new Request.Builder().url(GuokrApi.getURL(type)).build();
         return client.newCall(request);
     }
 

@@ -1,4 +1,4 @@
-package com.petits_raids.yunbiannews.ui.fragment;
+package com.petits_raids.yunbiannews.ui.fragment.guokr;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,6 +29,11 @@ public class GuokrFragment extends Fragment {
     private List<GuokrItem> guokrItemList = new ArrayList<>();
     private GuokrAdapter adapter;
     private boolean isFirst = true;
+    private int guokrType;
+
+    GuokrFragment(int guokrType) {
+        this.guokrType = guokrType;
+    }
 
     @Nullable
     @Override
@@ -45,6 +50,7 @@ public class GuokrFragment extends Fragment {
         guokrRecyclerView.addItemDecoration(divider);
 
         GuokrItemViewModel guokrItemViewModel = ViewModelProviders.of(this).get(GuokrItemViewModel.class);
+        guokrItemViewModel.setType(guokrType);
         guokrItemViewModel.liveGuokrItemList.observe(this, guokrItems -> {
             guokrItemList.clear();
             guokrItemList.addAll(guokrItems);
@@ -64,4 +70,8 @@ public class GuokrFragment extends Fragment {
         });
         return view;
     }
+
+//    private int getGuokrType() {
+//        return guokrType;
+//    }
 }

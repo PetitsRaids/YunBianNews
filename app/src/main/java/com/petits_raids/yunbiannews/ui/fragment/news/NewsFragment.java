@@ -1,4 +1,4 @@
-package com.petits_raids.yunbiannews.ui.fragment;
+package com.petits_raids.yunbiannews.ui.fragment.news;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,19 +26,23 @@ import java.util.List;
 
 public class NewsFragment extends Fragment {
 
-//    private static final String TAG = "NewsFragment";
+    private static final String TAG = "NewsFragment";
 
     private NewsViewModel newsViewModel;
     private NewsAdapter adapter;
     private List<News> newsList = new ArrayList<>();
     private SwipeRefreshLayout swipeRefresh;
     private boolean isRefreshing;
+    private int newsType;
+
+    NewsFragment(int newsType) {
+        this.newsType = newsType;
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news, container, false);
-
         RecyclerView recyclerView = view.findViewById(R.id.news_recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(RecyclerView.VERTICAL);
@@ -48,6 +52,8 @@ public class NewsFragment extends Fragment {
         recyclerView.addItemDecoration(decoration);
 
         newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
+        newsViewModel.setType(getNewsType());
+        newsViewModel.getAllNews();
         Observer<List<News>> observable = newsList1 -> {
             newsList.clear();
             if (newsList1 != null) {
@@ -75,5 +81,13 @@ public class NewsFragment extends Fragment {
             swipeRefresh.setRefreshing(true);
         });
         return view;
+    }
+
+    protected void setNewsType(int type) {
+        newsType = type;
+    }
+
+    protected int getNewsType() {
+        return newsType;
     }
 }
