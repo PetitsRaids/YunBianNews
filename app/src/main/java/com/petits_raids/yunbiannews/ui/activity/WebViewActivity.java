@@ -41,6 +41,10 @@ public class WebViewActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        webView.stopLoading();
+        webView.getSettings().setJavaScriptEnabled(false);
+        webView.clearHistory();
+        webView.removeAllViews();
         webView.destroy();
     }
 }

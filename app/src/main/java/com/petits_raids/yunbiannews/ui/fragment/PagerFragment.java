@@ -21,6 +21,7 @@ public abstract class PagerFragment extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private int currentPage;
     protected List<Fragment> fragmentList = new ArrayList<>();
     protected List<String> titleList = new ArrayList<>();
 
@@ -40,6 +41,26 @@ public abstract class PagerFragment extends Fragment {
         initFragmentList();
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager(), fragmentList, titleList);
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPage = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    protected int getCurrentPage() {
+        return currentPage;
     }
 
     protected abstract void initFragmentList();

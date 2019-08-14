@@ -30,10 +30,7 @@ public class GuokrFragment extends Fragment {
     private GuokrAdapter adapter;
     private boolean isFirst = true;
     private int guokrType;
-
-    GuokrFragment(int guokrType) {
-        this.guokrType = guokrType;
-    }
+    private GuokrItemViewModel guokrItemViewModel;
 
     @Nullable
     @Override
@@ -49,12 +46,16 @@ public class GuokrFragment extends Fragment {
         DividerItemDecoration divider = new DividerItemDecoration(getContext(), manager.getOrientation());
         guokrRecyclerView.addItemDecoration(divider);
 
-        GuokrItemViewModel guokrItemViewModel = ViewModelProviders.of(this).get(GuokrItemViewModel.class);
+        if (getArguments() != null) {
+            guokrType = getArguments().getInt("type");
+        }
+        guokrItemViewModel = ViewModelProviders.of(this).get(GuokrItemViewModel.class);
         guokrItemViewModel.setType(guokrType);
         guokrItemViewModel.liveGuokrItemList.observe(this, guokrItems -> {
             guokrItemList.clear();
             guokrItemList.addAll(guokrItems);
             adapter.notifyDataSetChanged();
+            guokrRecyclerView.smoothScrollToPosition(0);
             if (isFirst)
                 return;
             refreshLayout.setRefreshing(false);
@@ -63,15 +64,14 @@ public class GuokrFragment extends Fragment {
 
         refreshLayout = view.findViewById(R.id.guokr_swipe_refresh);
         refreshLayout.setColorSchemeResources(R.color.colorAccent);
-        refreshLayout.setOnRefreshListener(() -> {
-            guokrItemViewModel.updateGuokrItem();
-            refreshLayout.setRefreshing(true);
-            isFirst = false;
-        });
+        refreshLayout.setOnRefreshListener(this::refreshData);
         return view;
     }
 
-//    private int getGuokrType() {
-//        return guokrType;
-//    }
+    void refreshData() {
+        guokrItemViewModel.updateGuokrItem();
+        refreshLayout.setRefreshing(true);
+        isFirst = false;
+    }
+
 }

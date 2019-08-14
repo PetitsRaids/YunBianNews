@@ -26,18 +26,12 @@ import java.util.List;
 
 public class NewsFragment extends Fragment {
 
-    private static final String TAG = "NewsFragment";
-
     private NewsViewModel newsViewModel;
     private NewsAdapter adapter;
     private List<News> newsList = new ArrayList<>();
     private SwipeRefreshLayout swipeRefresh;
     private boolean isRefreshing;
     private int newsType;
-
-    NewsFragment(int newsType) {
-        this.newsType = newsType;
-    }
 
     @Nullable
     @Override
@@ -51,6 +45,9 @@ public class NewsFragment extends Fragment {
                 new DividerItemDecoration(getContext(), manager.getOrientation());
         recyclerView.addItemDecoration(decoration);
 
+        if (getArguments() != null) {
+            newsType = getArguments().getInt("type");
+        }
         newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
         newsViewModel.setType(getNewsType());
         newsViewModel.getAllNews();
@@ -68,6 +65,7 @@ public class NewsFragment extends Fragment {
             if (isRefreshing) {
                 swipeRefresh.setRefreshing(false);
                 isRefreshing = false;
+                recyclerView.smoothScrollToPosition(0);
                 Toast.makeText(getContext(), R.string.data_updated, Toast.LENGTH_SHORT).show();
             }
         };
@@ -75,19 +73,17 @@ public class NewsFragment extends Fragment {
 
         swipeRefresh = view.findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorAccent);
-        swipeRefresh.setOnRefreshListener(() -> {
-            newsViewModel.updateNews();
-            isRefreshing = true;
-            swipeRefresh.setRefreshing(true);
-        });
+        swipeRefresh.setOnRefreshListener(this::refreshData);
         return view;
     }
 
-    protected void setNewsType(int type) {
-        newsType = type;
+    void refreshData() {
+        newsViewModel.updateNews();
+        isRefreshing = true;
+        swipeRefresh.setRefreshing(true);
     }
 
-    protected int getNewsType() {
+    private int getNewsType() {
         return newsType;
     }
 }

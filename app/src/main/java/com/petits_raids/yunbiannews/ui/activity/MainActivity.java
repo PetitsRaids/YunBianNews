@@ -11,9 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.petits_raids.yunbiannews.R;
 import com.petits_raids.yunbiannews.support.adapter.ViewPagerAdapter;
-import com.petits_raids.yunbiannews.ui.fragment.guokr.GuokrFragment;
 import com.petits_raids.yunbiannews.ui.fragment.guokr.GuokrPagerFragment;
-import com.petits_raids.yunbiannews.ui.fragment.news.NewsFragment;
 import com.petits_raids.yunbiannews.ui.fragment.news.NewsPagerFragment;
 
 import java.util.ArrayList;
@@ -21,12 +19,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
-
     private Toolbar toolbar;
     private BottomNavigationView bottomNavigationView;
+    private NewsPagerFragment newsPagerFragment;
+    private GuokrPagerFragment guokrPagerFragment;
     private ViewPager viewPager;
     private MenuItem menuItem;
+    private int currentPage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +42,10 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.view_pager);
 
         List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(new NewsPagerFragment());
-        fragmentList.add(new GuokrPagerFragment());
+        newsPagerFragment = new NewsPagerFragment();
+        guokrPagerFragment = new GuokrPagerFragment();
+        fragmentList.add(newsPagerFragment);
+        fragmentList.add(guokrPagerFragment);
         List<String> titleList = new ArrayList<>();
         titleList.add("News");
         titleList.add("Guokr");
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter =
                 new ViewPagerAdapter(getSupportFragmentManager(), fragmentList, titleList);
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(2);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -78,9 +80,17 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.news_navigation:
                     viewPager.setCurrentItem(0, true);
+                    if (currentPage == 0) {
+                        newsPagerFragment.refreshData();
+                    }
+                    currentPage = 0;
                     break;
                 case R.id.guokr_navigation:
                     viewPager.setCurrentItem(1, true);
+                    if (currentPage == 1) {
+                        guokrPagerFragment.refreshData();
+                    }
+                    currentPage = 1;
                     break;
                 default:
                     break;
