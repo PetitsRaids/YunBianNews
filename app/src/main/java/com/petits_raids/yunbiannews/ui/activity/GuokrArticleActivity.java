@@ -6,6 +6,7 @@ import android.webkit.WebView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.petits_raids.yunbiannews.R;
+import com.petits_raids.yunbiannews.YunBianApplication;
 
 public class GuokrArticleActivity extends AppCompatActivity {
 
@@ -21,6 +22,9 @@ public class GuokrArticleActivity extends AppCompatActivity {
             finish();
         webView = findViewById(R.id.guokr_article_web_view);
         webView.post(() -> webView.loadUrl("https://m.guokr.com/article/" + articleId + "/"));
+
+        if (YunBianApplication.isNightMode())
+            webView.setAlpha(0.3f);
     }
 
     @Override

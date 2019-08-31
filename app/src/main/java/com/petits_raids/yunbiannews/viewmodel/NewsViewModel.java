@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.petits_raids.yunbiannews.data.Repository;
-import com.petits_raids.yunbiannews.data.model.News;
+import com.petits_raids.yunbiannews.data.model.news.News;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -26,15 +26,11 @@ public class NewsViewModel extends AndroidViewModel {
     }
 
     public void getAllNews() {
-        executor.execute(() -> {
-            repository.getAllNews(type);
-        });
+        executor.execute(() -> repository.getAllNews(type));
     }
 
     public void updateNews() {
-        executor.execute(() -> {
-            repository.updateNews(type);
-        });
+        executor.execute(() -> repository.updateNews(type));
     }
 
     public void setType(int type) {

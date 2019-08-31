@@ -1,6 +1,7 @@
 package com.petits_raids.yunbiannews.ui.fragment.guokr;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,6 @@ public class GuokrFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guokr, container, false);
-
         RecyclerView guokrRecyclerView = view.findViewById(R.id.guokr_recycler_view);
         adapter = new GuokrAdapter(getContext(), guokrItemList);
         guokrRecyclerView.setAdapter(adapter);
@@ -53,7 +53,9 @@ public class GuokrFragment extends Fragment {
         guokrItemViewModel.setType(guokrType);
         guokrItemViewModel.liveGuokrItemList.observe(this, guokrItems -> {
             guokrItemList.clear();
-            guokrItemList.addAll(guokrItems);
+            if (guokrItems != null) {
+                guokrItemList.addAll(guokrItems);
+            }
             adapter.notifyDataSetChanged();
             guokrRecyclerView.smoothScrollToPosition(0);
             if (isFirst)
@@ -65,6 +67,7 @@ public class GuokrFragment extends Fragment {
         refreshLayout = view.findViewById(R.id.guokr_swipe_refresh);
         refreshLayout.setColorSchemeResources(R.color.colorAccent);
         refreshLayout.setOnRefreshListener(this::refreshData);
+        guokrItemViewModel.getAllGuokrItem();
         return view;
     }
 

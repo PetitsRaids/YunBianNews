@@ -4,7 +4,10 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="white">#FFFFFF</color>
+    <color name="common_text_color">#FFFFFF</color>
+    <color name="bottom_navigation_color">#FAFAFA</color>
+    <color name="bottom_navigation_selected">#008577</color>
+    <color name="bottom_navigation_not_selected">#757575</color>
     <color name="guokr_green">#85bf55</color>
     <color name="black">#000000</color>
 </resources>

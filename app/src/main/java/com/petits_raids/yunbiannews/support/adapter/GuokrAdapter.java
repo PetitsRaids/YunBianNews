@@ -28,19 +28,6 @@ public class GuokrAdapter extends RecyclerView.Adapter<GuokrAdapter.ViewHolder> 
         this.mContext = mContext;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        TextView titleGuokr;
-        TextView summaryGuokr;
-        ImageView imageGuokr;
-
-        ViewHolder(View view) {
-            super(view);
-            titleGuokr = view.findViewById(R.id.title_guokr);
-            summaryGuokr = view.findViewById(R.id.summary_guokr);
-            imageGuokr = view.findViewById(R.id.image_guokr);
-        }
-    }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -66,6 +53,19 @@ public class GuokrAdapter extends RecyclerView.Adapter<GuokrAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
         return guokrItemList.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        TextView titleGuokr;
+        TextView summaryGuokr;
+        ImageView imageGuokr;
+
+        ViewHolder(View view) {
+            super(view);
+            titleGuokr = view.findViewById(R.id.title_guokr);
+            summaryGuokr = view.findViewById(R.id.summary_guokr);
+            imageGuokr = view.findViewById(R.id.image_guokr);
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-package com.petits_raids.yunbiannews.data.model;
+package com.petits_raids.yunbiannews.data.model.news;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

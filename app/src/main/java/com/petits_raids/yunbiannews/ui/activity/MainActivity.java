@@ -1,15 +1,20 @@
 package com.petits_raids.yunbiannews.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.petits_raids.yunbiannews.R;
+import com.petits_raids.yunbiannews.YunBianApplication;
 import com.petits_raids.yunbiannews.support.adapter.ViewPagerAdapter;
 import com.petits_raids.yunbiannews.ui.fragment.guokr.GuokrPagerFragment;
 import com.petits_raids.yunbiannews.ui.fragment.news.NewsPagerFragment;
@@ -19,27 +24,35 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
     private BottomNavigationView bottomNavigationView;
     private NewsPagerFragment newsPagerFragment;
     private GuokrPagerFragment guokrPagerFragment;
     private ViewPager viewPager;
     private MenuItem menuItem;
-    private int currentPage = 0;
+    private static String pageNumber = "PageNumber";
+    private int currentPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (YunBianApplication.isNightMode())
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        else
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_main);
+        if (savedInstanceState != null)
+            currentPage = savedInstanceState.getInt(pageNumber);
         init();
-        toolbar.setTitle(R.string.app_name);
     }
 
     private void init() {
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         viewPager = findViewById(R.id.view_pager);
+
+        toolbar.setTitle(R.string.app_name);
+        setSupportActionBar(toolbar);
 
         List<Fragment> fragmentList = new ArrayList<>();
         newsPagerFragment = new NewsPagerFragment();
@@ -97,6 +110,27 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt(pageNumber, currentPage);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        }
+        return false;
     }
 
 }

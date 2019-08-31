@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">云边新闻</string>
+    <string name="night_mode">夜间模式</string>
+    <string name="settings">设置</string>
+
+    <string name="data_updated">数据已更新</string>
+    <string name="des_news_img">新闻标题图片</string>
+    <string name="des_guokr_img">果壳标题图片</string>
+    <string name="des_guokr_article_img">果壳文章图片</string>
+
+    <string name="guokr_tag">果壳</string>
+    <string name="news_tag">新闻</string>
+
+    <string name="without_description">暂无简介</string>
+    <string name="news_local">国内</string>
+    <string name="news_world">国际</string>
+    <string name="news_politics">时政</string>
+    <string name="news_picture">图片</string>
+
+    <string name="pac">物种日历</string>
+    <string name="fact">谣言粉碎机</string>
+    <string name="predator">吃货研究所</string>
+    <string name="beauty">美丽也是技术活</string>
+</resources>

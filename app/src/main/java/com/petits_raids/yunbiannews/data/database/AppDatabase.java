@@ -10,8 +10,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.petits_raids.yunbiannews.YunBianApplication;
 import com.petits_raids.yunbiannews.data.database.dao.GuokrDao;
 import com.petits_raids.yunbiannews.data.database.dao.NewsDao;
-import com.petits_raids.yunbiannews.data.model.News;
 import com.petits_raids.yunbiannews.data.model.guokr.GuokrItem;
+import com.petits_raids.yunbiannews.data.model.news.News;
 
 @Database(entities = {News.class, GuokrItem.class}, version = 4, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
@@ -37,10 +37,6 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     };
 
-    public abstract NewsDao newsDao();
-
-    public abstract GuokrDao guokrDao();
-
     public static AppDatabase getInstance() {
         if (instance == null) {
             synchronized (LOCK) {
@@ -53,4 +49,8 @@ public abstract class AppDatabase extends RoomDatabase {
         }
         return instance;
     }
+
+    public abstract NewsDao newsDao();
+
+    public abstract GuokrDao guokrDao();
 }

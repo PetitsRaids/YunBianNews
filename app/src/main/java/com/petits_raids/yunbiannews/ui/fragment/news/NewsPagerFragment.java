@@ -1,7 +1,9 @@
 package com.petits_raids.yunbiannews.ui.fragment.news;
 
 import android.os.Bundle;
+import android.util.Log;
 
+import com.petits_raids.yunbiannews.R;
 import com.petits_raids.yunbiannews.api.NewsApi;
 import com.petits_raids.yunbiannews.ui.fragment.PagerFragment;
 
@@ -29,13 +31,14 @@ public class NewsPagerFragment extends PagerFragment {
         fragmentList.add(worldNewsFragment);
         fragmentList.add(politicsNewsFragment);
         fragmentList.add(pictureNewsFragment);
-        titleList.add("LOCAL");
-        titleList.add("WORLD");
-        titleList.add("POLITICS");
-        titleList.add("PICTURE");
+        titleList.add(getContext().getResources().getString(R.string.news_local));
+        titleList.add(getContext().getResources().getString(R.string.news_world));
+        titleList.add(getContext().getResources().getString(R.string.news_politics));
+        titleList.add(getContext().getResources().getString(R.string.news_picture));
     }
 
     public void refreshData() {
+        Log.d("Gakki", "NewsFragment: refreshData: " + fragmentList.size());
         NewsFragment fragment = (NewsFragment) fragmentList.get(getCurrentPage());
         fragment.refreshData();
     }

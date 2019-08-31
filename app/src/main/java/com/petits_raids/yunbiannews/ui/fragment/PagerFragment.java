@@ -19,11 +19,11 @@ import java.util.List;
 
 public abstract class PagerFragment extends Fragment {
 
+    protected List<Fragment> fragmentList = new ArrayList<>();
+    protected List<String> titleList = new ArrayList<>();
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private int currentPage;
-    protected List<Fragment> fragmentList = new ArrayList<>();
-    protected List<String> titleList = new ArrayList<>();
 
     @Nullable
     @Override

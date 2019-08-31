@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.petits_raids.yunbiannews.R;
-import com.petits_raids.yunbiannews.data.model.News;
+import com.petits_raids.yunbiannews.data.model.news.News;
 import com.petits_raids.yunbiannews.ui.activity.WebViewActivity;
 
 import java.util.List;
@@ -24,19 +24,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     public NewsAdapter(Context mContext, List<News> newsList) {
         this.mContext = mContext;
         this.newsList = newsList;
-    }
-
-    class ViewHolder extends RecyclerView.ViewHolder {
-        TextView newsTitle;
-        TextView newsContent;
-        TextView newsTime;
-
-        ViewHolder(View view) {
-            super(view);
-            newsTitle = view.findViewById(R.id.title_news);
-            newsContent = view.findViewById(R.id.content_news);
-            newsTime = view.findViewById(R.id.time_news);
-        }
     }
 
     @NonNull
@@ -64,6 +51,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return newsList.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        TextView newsTitle;
+        TextView newsContent;
+        TextView newsTime;
+
+        ViewHolder(View view) {
+            super(view);
+            newsTitle = view.findViewById(R.id.title_news);
+            newsContent = view.findViewById(R.id.content_news);
+            newsTime = view.findViewById(R.id.time_news);
+        }
     }
 
 }

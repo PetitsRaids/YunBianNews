@@ -2,6 +2,7 @@ package com.petits_raids.yunbiannews.api;
 
 public class NewsApi {
 
+    public static final String NEWS_BASE = "http://www.xinhuanet.com/";
     public static final String WORLD = "http://www.xinhuanet.com/world/news_world.xml";
     public static final String LOCAL = "http://www.xinhuanet.com/local/news_province.xml";
     public static final String POLITICS = "http://www.xinhuanet.com/politics/news_politics.xml";

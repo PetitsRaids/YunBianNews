@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2B2B2B</color>
+    <color name="colorPrimaryDark">#666666</color>
+    <color name="colorAccent">#BB0025</color>
+
+    <color name="common_text_color">#E6E6E6</color>
+    <color name="bottom_navigation_color">#303030</color>
+    <color name="bottom_navigation_selected">#666666</color>
+    <color name="guokr_green">#007700</color>
+    <color name="black">#E6E6E6</color>
+</resources>

@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.petits_raids.yunbiannews.data.model.News;
+import com.petits_raids.yunbiannews.data.model.news.News;
 
 import java.util.List;
 

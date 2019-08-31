@@ -1,6 +1,6 @@
 package com.petits_raids.yunbiannews.support.utils;
 
-import com.petits_raids.yunbiannews.data.model.News;
+import com.petits_raids.yunbiannews.data.model.news.News;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;

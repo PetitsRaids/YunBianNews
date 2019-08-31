@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "guokr_item")
-public class GuokrItem{
+public class GuokrItem {
 
     @PrimaryKey
     private int selfId;

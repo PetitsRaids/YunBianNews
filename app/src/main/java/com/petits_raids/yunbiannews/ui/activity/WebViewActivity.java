@@ -8,6 +8,7 @@ import android.webkit.WebViewClient;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.petits_raids.yunbiannews.R;
+import com.petits_raids.yunbiannews.YunBianApplication;
 
 public class WebViewActivity extends AppCompatActivity {
 
@@ -36,6 +37,8 @@ public class WebViewActivity extends AppCompatActivity {
         String url = getIntent().getStringExtra("url");
         if (url != null && url.length() != 0)
             webView.post(() -> webView.loadUrl(url));
+        if (YunBianApplication.isNightMode())
+            webView.setAlpha(0.3f);
     }
 
     @Override

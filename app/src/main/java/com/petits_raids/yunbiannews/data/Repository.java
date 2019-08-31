@@ -1,41 +1,41 @@
 package com.petits_raids.yunbiannews.data;
 
-import androidx.lifecycle.LiveData;
+import android.util.Log;
 
-import com.google.gson.Gson;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.petits_raids.yunbiannews.api.GuokrApi;
 import com.petits_raids.yunbiannews.api.NewsApi;
 import com.petits_raids.yunbiannews.data.database.AppDatabase;
-import com.petits_raids.yunbiannews.data.model.News;
 import com.petits_raids.yunbiannews.data.model.guokr.GuokrItem;
 import com.petits_raids.yunbiannews.data.model.guokr.GuokrResult;
+import com.petits_raids.yunbiannews.data.model.news.News;
+import com.petits_raids.yunbiannews.support.service.GuokrService;
 import com.petits_raids.yunbiannews.support.utils.DecodeUtil;
 import com.petits_raids.yunbiannews.support.utils.NetworkUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Repository {
 
-    public List<LiveData<List<News>>> listLiveNewsList;
-    private LiveData<List<News>> liveNewsList;
-    public List<LiveData<List<GuokrItem>>> listLiveGuokrItemList;
-    private LiveData<List<GuokrItem>> liveGuokrItemList;
-
     private static Repository instance;
+    public List<LiveData<List<News>>> listLiveNewsList;
+    public List<LiveData<List<GuokrItem>>> listLiveGuokrItemList;
+    private LiveData<List<News>> liveNewsList;
+    private MutableLiveData<List<GuokrItem>> liveGuokrItemList = new MutableLiveData<>();
+    private Executor executors = Executors.newSingleThreadScheduledExecutor();
     private AppDatabase database;
-
-    public static Repository getInstance() {
-        if (instance == null) {
-            instance = new Repository();
-        }
-        return instance;
-    }
 
     private Repository() {
         database = AppDatabase.getInstance();
@@ -48,6 +48,14 @@ public class Repository {
         listLiveGuokrItemList.add(database.guokrDao().getAllItems(0));
         listLiveGuokrItemList.add(database.guokrDao().getAllItems(1));
         listLiveGuokrItemList.add(database.guokrDao().getAllItems(2));
+        listLiveGuokrItemList.add(database.guokrDao().getAllItems(3));
+    }
+
+    public static Repository getInstance() {
+        if (instance == null) {
+            instance = new Repository();
+        }
+        return instance;
     }
 
     public void updateNews(int type) {
@@ -85,7 +93,6 @@ public class Repository {
     }
 
     public void getAllNews(int type) {
-        liveNewsList = listLiveNewsList.get(type);
         liveNewsList = database.newsDao().getAllNews(type);
 
         if (liveNewsList == null) {
@@ -94,37 +101,37 @@ public class Repository {
     }
 
     public void updateGuokrItem(int type) {
-        NetworkUtil.askForGuoKr(type).enqueue(new Callback() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(GuokrApi.GUOKR_BASE)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        GuokrService guokrService = retrofit.create(GuokrService.class);
+        guokrService.getGuokrResult(GuokrApi.getURL(type)).enqueue(new retrofit2.Callback<GuokrResult>() {
             @Override
-            public void onFailure(Call call, IOException e) {
-
+            public void onResponse(retrofit2.Call<GuokrResult> call, retrofit2.Response<GuokrResult> response) {
+                executors.execute(() -> {
+                    if (response.body().isOk()) {
+                        List<GuokrItem> guokrItemList = new ArrayList<>(response.body().getResult());
+                        int selfId = type * 20;
+                        for (GuokrItem item : guokrItemList) {
+                            Log.d("TAG", item.getTitle());
+                            item.setSelfId(selfId++);
+                            item.setType(type);
+                        }
+                        database.guokrDao().insertAll(guokrItemList);
+                    }
+                });
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                int i = 0;
-                switch (type) {
-                    case GuokrApi.HOT:
-                        i = 0;
-                        break;
-                    case GuokrApi.FRONTIER:
-                        i = 20;
-                        break;
-                    case GuokrApi.VISUAL:
-                        i = 40;
-                        break;
-                    default:
-                        break;
-                }
-                List<GuokrItem> guokrItems =
-                        new Gson().fromJson(response.body().string(), GuokrResult.class).getResult();
-                for (GuokrItem item : guokrItems) {
-                    item.setType(type);
-                    item.setSelfId(i++);
-                }
-                database.guokrDao().insertAll(guokrItems);
-                liveGuokrItemList = database.guokrDao().getAllItems(type);
+            public void onFailure(retrofit2.Call<GuokrResult> call, Throwable t) {
+                Log.d("TAG", "onFailure");
             }
         });
     }
+
+    public void getAllGuokrItem(int type) {
+        liveGuokrItemList.postValue(database.guokrDao().getAllItems(type).getValue());
+    }
+
 }

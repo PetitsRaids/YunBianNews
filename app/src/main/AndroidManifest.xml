@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.SettingsActivity" />
         <activity android:name=".ui.activity.GuokrArticleActivity" />
         <activity android:name=".ui.activity.WebViewActivity" />
         <activity
@@ -20,7 +21,7 @@
             android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
